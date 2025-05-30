@@ -1,43 +1,41 @@
 class RegistroController {
   constructor() {
-    this.users = []; // Array to store user data
+    this.users = [];
   }
 
   registerUser(req, res) {
-    const { name, email, password, userType } = req.body;
+    const { name, email, password, confirmPassword, userType } = req.body;
 
-    // Simple validation
+    // Validaciones...
     if (!name || !email || !password || !userType) {
-      return res.status(400).json({ message: "All fields are required." });
+      return res.render("registro", {
+        users: this.users,
+        error: "Todos los campos son obligatorios.",
+      });
     }
-
-    // Check if email is valid
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Invalid email format." });
+      return res.render("registro", {
+        users: this.users,
+        error: "Formato de correo inválido.",
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.render("registro", {
+        users: this.users,
+        error: "Las contraseñas no coinciden.",
+      });
     }
 
-    // Check if passwords match
-    if (req.body.password !== req.body.confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match." });
-    }
-
-    // Create user object
-    const newUser = {
-      name,
-      email,
-      password, // In a real application, make sure to hash the password
-      userType,
-    };
-
-    // Store user data
+    // Guardar usuario
+    const newUser = { name, email, userType };
     this.users.push(newUser);
 
-    // Respond with success message
-    return res
-      .status(201)
-      .json({ message: "User registered successfully!", user: newUser });
+    // Guardar mensaje en sesión y redirigir
+    req.session = req.session || {};
+    req.session.success = "¡Usuario registrado exitosamente!";
+    return res.redirect("/registro");
   }
 }
 
-module.exports = RegistroController;
+module.exports = new RegistroController();

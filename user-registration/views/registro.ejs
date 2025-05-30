@@ -1,3 +1,4 @@
+<% var users = typeof users !== 'undefined' ? users : []; %>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -60,10 +61,13 @@
               type="text"
               id="name"
               name="name"
-              required
               class="form-input block w-full rounded-xl border-gray-200 bg-gray-50/50 p-3 text-sm transition duration-200 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white"
-              placeholder="Ej: Juan Pérez"
+              placeholder="Ej. Juan Perez"
             />
+            <span
+              id="nameError"
+              class="text-red-500 text-xs mt-1 hidden"
+            ></span>
           </div>
 
           <div>
@@ -97,6 +101,10 @@
                 </svg>
               </div>
             </div>
+            <span
+              id="emailError"
+              class="text-red-500 text-xs mt-1 hidden"
+            ></span>
           </div>
 
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -114,6 +122,10 @@
                 class="form-input block w-full rounded-xl border-gray-200 bg-gray-50/50 p-3 text-sm transition duration-200 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white"
                 placeholder="********"
               />
+              <span
+                id="passwordError"
+                class="text-red-500 text-xs mt-1 hidden"
+              ></span>
             </div>
             <div>
               <label
@@ -127,8 +139,12 @@
                 name="confirmPassword"
                 required
                 class="form-input block w-full rounded-xl border-gray-200 bg-gray-50/50 p-3 text-sm transition duration-200 ease-in-out focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white"
-                placeholder="********"
+                placeholder="*********"
               />
+              <span
+                id="confirmPasswordError"
+                class="text-red-500 text-xs mt-1 hidden"
+              ></span>
             </div>
           </div>
 
@@ -170,6 +186,63 @@
           >Iniciar sesión</a
         >
       </footer>
+      <!-- Botón para abrir el modal -->
+      <button
+        type="button"
+        id="showUsersBtn"
+        class="mt-4 w-full bg-white border border-blue-200 text-blue-700 font-medium py-2 px-4 rounded-xl shadow hover:bg-blue-50 transition"
+      >
+        Ver usuarios registrados
+      </button>
+
+      <!-- Modal -->
+      <div
+        id="usersModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 hidden"
+      >
+        <div
+          class="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 relative"
+        >
+          <button
+            id="closeModalBtn"
+            class="top-3 right-3 text-gray-400 hover:text-blue-600 text-2xl"
+          >
+            &times;
+          </button>
+          <h3 class="text-xl mt-6 font-bold mb-4 text-blue-700">
+            Usuarios registrados
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left">
+              <thead>
+                <tr>
+                  <th class="py-2 px-3 border-b font-semibold">Nombre</th>
+                  <th class="py-2 px-3 border-b font-semibold">Correo</th>
+                  <th class="py-2 px-3 border-b font-semibold">Tipo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (users && users.length > 0) { %> <%
+                users.forEach(function(user) { %>
+                <tr>
+                  <td class="py-2 px-3 border-b"><%= user.name %></td>
+                  <td class="py-2 px-3 border-b"><%= user.email %></td>
+                  <td class="py-2 px-3 border-b capitalize">
+                    <%= user.userType %>
+                  </td>
+                </tr>
+                <% }) %> <% } else { %>
+                <tr>
+                  <td colspan="3" class="py-4 text-center text-gray-400">
+                    No hay usuarios registrados.
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="/js/registro.js"></script>

@@ -1,66 +1,94 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    const userTypeInput = document.getElementById('userType');
-    const messageBox = document.getElementById('messageBox');
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("registrationForm");
+  const name = document.getElementById("name");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const confirmPassword = document.getElementById("confirmPassword");
+  const userType = document.getElementById("userType");
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        clearMessages();
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const confirmPasswordError = document.getElementById("confirmPasswordError");
+  const successMessage = document.getElementById("successMessage");
 
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-        const confirmPassword = confirmPasswordInput.value.trim();
-        const userType = userTypeInput.value;
+  const showUsersBtn = document.getElementById("showUsersBtn");
+  const usersModal = document.getElementById("usersModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
 
-        let isValid = true;
+  function clearMessages() {
+    if (nameError) nameError.textContent = "";
+    if (emailError) emailError.textContent = "";
+    if (passwordError) passwordError.textContent = "";
+    if (confirmPasswordError) confirmPasswordError.textContent = "";
+    if (successMessage) {
+      successMessage.classList.add("hidden");
+      successMessage.textContent = "";
+    }
+  }
 
-        if (!name) {
-            showMessage('El nombre es obligatorio.', 'error');
-            isValid = false;
-        }
-
-        if (!validateEmail(email)) {
-            showMessage('Por favor, introduce un correo electrónico válido.', 'error');
-            isValid = false;
-        }
-
-        if (!password) {
-            showMessage('La contraseña es obligatoria.', 'error');
-            isValid = false;
-        }
-
-        if (password !== confirmPassword) {
-            showMessage('Las contraseñas no coinciden.', 'error');
-            isValid = false;
-        }
-
-        if (isValid) {
-            showMessage('Registro exitoso. Enviando datos...', 'success');
-            // Simulate API call
-            setTimeout(() => {
-                form.reset();
-                showMessage('Datos enviados correctamente.', 'success');
-            }, 1000);
-        }
+  if (showUsersBtn && usersModal && closeModalBtn) {
+    showUsersBtn.addEventListener("click", () => {
+      usersModal.classList.remove("hidden");
     });
+    closeModalBtn.addEventListener("click", () => {
+      usersModal.classList.add("hidden");
+    });
+    usersModal.addEventListener("click", (e) => {
+      if (e.target === usersModal) usersModal.classList.add("hidden");
+    });
+  }
 
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
+  form.addEventListener("submit", function (e) {
+    clearMessages();
+    let valid = true;
+
+    // Validación de nombre
+    if (!name.value.trim()) {
+      if (nameError) {
+        nameError.textContent = "El nombre es obligatorio.";
+        nameError.classList.remove("hidden");
+      }
+      valid = false;
     }
 
-    function showMessage(message, type) {
-        messageBox.textContent = message;
-        messageBox.className = type === 'error' ? 'text-red-500' : 'text-green-500';
+    // Validación de email
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value.trim() || !emailPattern.test(email.value)) {
+      if (emailError) {
+        emailError.textContent = "Ingresa un correo válido.";
+        emailError.classList.remove("hidden");
+      }
+      valid = false;
     }
 
-    function clearMessages() {
-        messageBox.textContent = '';
-        messageBox.className = '';
+    // Validación de contraseña
+    if (!password.value || password.value.length < 6) {
+      if (passwordError) {
+        passwordError.textContent =
+          "La contraseña debe tener al menos 6 caracteres.";
+        passwordError.classList.remove("hidden");
+      }
+      valid = false;
     }
+
+    // Validación de confirmación de contraseña
+    if (password.value !== confirmPassword.value) {
+      if (confirmPasswordError) {
+        confirmPasswordError.textContent = "Las contraseñas no coinciden.";
+        confirmPasswordError.classList.remove("hidden");
+      }
+      valid = false;
+    }
+
+    if (!valid) {
+      e.preventDefault();
+      return;
+    }
+
+    if (successMessage) {
+      successMessage.textContent = "¡Registro completado con éxito!";
+      successMessage.classList.remove("hidden");
+    }
+  });
 });

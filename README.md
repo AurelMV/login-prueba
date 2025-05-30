@@ -1,63 +1,64 @@
-# User Registration Project
+# Proyecto de Registro de Usuarios
 
-This project is a simple user registration module built with Node.js and Express. It allows users to register by providing their name, email, password, and user type. The application includes front-end validation and a back-end structure to handle user data.
+Este proyecto es un módulo simple de registro de usuarios construido con Node.js y Express. Permite a los usuarios registrarse proporcionando su nombre, correo electrónico, contraseña y tipo de usuario. La aplicación incluye validación en el front-end y una estructura de back-end para manejar los datos de los usuarios.
 
-## Project Structure
+## Estructura del Proyecto
 
 ```
 user-registration
-├── app.js                  # Entry point of the application
-├── controllers             # Contains controller files
-│   └── registroController.js # Handles user registration logic
-├── models                  # Contains model files
-│   └── usuario.js          # Defines the User model
-├── public                  # Contains public assets
+├── app.js                  # Punto de entrada de la aplicación
+├── controllers             # Contiene los archivos de controladores
+│   └── registroController.js # Maneja la lógica del registro de usuarios
+├── models                  # Contiene los archivos de modelos
+│   └── usuario.js          # Define el modelo de Usuario
+├── public                  # Contiene recursos públicos
 │   ├── css
-│   │   └── tailwind.css    # Tailwind CSS styles
+│   │   └── tailwind.css    # Estilos de Tailwind CSS
 │   └── js
-│       └── registro.js      # JavaScript for form validation and interactivity
-├── routes                  # Contains route definitions
-│   └── registro.js         # Defines routes for user registration
-├── views                   # Contains view templates
-│   └── registro.ejs        # EJS template for the registration form
-└── README.md               # Project documentation
+│       └── registro.js      # JavaScript para la validación del formulario e interactividad
+├── routes                  # Contiene las definiciones de rutas
+│   └── registro.js         # Define las rutas para el registro de usuarios
+├── views                   # Contiene las plantillas de vistas
+│   └── registro.ejs        # Plantilla EJS para el formulario de registro
 ```
 
-## Features
+## Funcionalidades
 
-- User registration form with fields for name, email, password, and user type.
-- Front-end validation for required fields, valid email format, and matching passwords.
-- Dynamic error and success messages displayed to the user.
-- Simple back-end structure to handle form submissions and store user data.
+- Formulario de registro con campos para nombre, correo electrónico, contraseña y tipo de usuario.
+- Validación en el front-end para campos requeridos, formato válido de correo electrónico y coincidencia de contraseñas.
+- Mensajes dinámicos de error y éxito mostrados al usuario.
+- Modal para ver los usuarios registrados.
+- Estructura sencilla de back-end para manejar envíos de formularios y almacenar los datos del usuario.
 
-## Setup Instructions
+## Instrucciones de Instalación
 
-1. Clone the repository:
+1. Clona el repositorio:
+
+   ```bash
+   git clone https://github.com/AurelMV/login-prueba.git
    ```
-   git clone <repository-url>
-   ```
 
-2. Navigate to the project directory:
-   ```
+2. Navega al directorio del proyecto:
+
+   ```bash
+   cd login-prueba
    cd user-registration
    ```
 
-3. Install the required dependencies:
-   ```
+3. Instala las dependencias necesarias:
+
+   ```bash
    npm install
    ```
 
-4. Start the application:
-   ```
+4. Inicia la aplicación:
+
+   ```bash
    node app.js
    ```
 
-5. Open your browser and navigate to `http://localhost:3000/registro` to access the registration form.
+5. Abre tu navegador y navega a `http://localhost:3000/registro` para acceder al formulario de registro.
 
-## Usage
+## Uso
 
-Fill out the registration form with the required information and submit. The application will validate the input and provide feedback. Upon successful registration, the user data will be processed and stored.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a pull request or open an issue for any suggestions or improvements.
+Completa el formulario de registro con la información requerida y envíalo. La aplicación validará los datos ingresados. Tras un registro exitoso, los datos del usuario serán procesados y almacenados.

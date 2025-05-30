@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const RegistroController = require("../controllers/registroController");
-
-const registroController = new RegistroController();
+const registroController = require("../controllers/registroController");
 
 router.get("/", (req, res) => {
-  res.render("registro");
+  res.render("registro", { users: registroController.users });
 });
 
 router.post("/", (req, res) => {
